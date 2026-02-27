@@ -1,6 +1,6 @@
-# **peda_img : A Lightweight Image Processing Toolkit for Python**
+# **pixrr : A lightweight image processing toolkit for python**
 
-`peda_img` is a lightweight, beginner-friendly image processing library built for fast experimentation and teaching.
+`pixrr` is a lightweight, beginner-friendly image processing library built for fast experimentation and teaching.
 It focuses on simplicity, clean function names, and easy-to-understand code, making it useful both for quick image tasks and for pedagogical environments such as introductory image processing courses.
 
 ---
@@ -60,7 +60,7 @@ It focuses on simplicity, clean function names, and easy-to-understand code, mak
 ## Installation (when it’s live)
 
 ```bash
-pip install peda_img
+pip install pixrr
 ```
 
 *(Currently under development. Not on PyPI yet.)*
@@ -70,13 +70,13 @@ pip install peda_img
 ## Usage Example
 
 ```python
-import peda_img as pimg
+import pixrr as pix
 
 # Example 
-img = pimg.handle_image("peda_img/test_images/test2.png")
-grey = pimg.convert_to_gray(img)
+img = pix.handle_image("peda_img/test_images/test2.png")
+grey = pix.convert_to_gray(img)
 # Applying gaussian
-pmig.show_image(pimg.gaussian_smoothing(grey, kernel_size=3))
+pix.show_image(pix.gaussian_smoothing(grey, kernel_size=3))
 ```
 
 ---

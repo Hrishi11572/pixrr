@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 
 [project]
-name = "peda_img"
+name = "pixrr"
 version = "0.1.0"
 description = "A lightweight image processing toolkit for Python"
 readme = "README.md"
@@ -35,6 +35,6 @@ classifiers = [
 
 
 [project.urls]
-"Homepage" = "https://github.com/Hrishi11572/peda_img"
-"Documentation" = "https://github.com/Hrishi11572/peda_img/tree/main/docs"
+"Homepage" = "https://github.com/Hrishi11572/pixrr"
+"Documentation" = "https://github.com/Hrishi11572/pixrr/tree/main/docs"
 
