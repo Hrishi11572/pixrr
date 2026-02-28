@@ -115,7 +115,7 @@ def show_image(img : np.ndarray, channel : str = "all")->None:
 
 def save_image(img: np.ndarray, directory : str | None = None , filename:str = "default.png")->None:
     '''
-    Docstring for saveImage
+    Docstring for save_image
     
     :param img: a numpy array
     :type img: np.ndarray

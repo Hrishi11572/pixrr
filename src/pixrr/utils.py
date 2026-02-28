@@ -7,9 +7,18 @@ from PIL import Image
 from .io import show_image, save_image
 
 def crop_image(img : np.ndarray, coords : tuple , viewMode : bool = True)->np.ndarray: 
-    """
-    coords : (startx , starty , endx , endy)
-    """
+    '''
+    Docstring for crop_image
+    
+    :param img: the input image 
+    :type img: np.ndarray
+
+    :para coords : the coordinates required for cropping in the form (start_x, start_y, end_x , end_y)
+    :type coords : tuple 
+    
+    - crops the image as per the provided coordinates 
+    '''
+    
     if img is None: 
         raise ValueError("No image passed. Please ensure proper input")
     
