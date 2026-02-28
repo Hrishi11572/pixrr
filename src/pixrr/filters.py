@@ -5,7 +5,19 @@ from numba import njit
 ''' Defining Convolution Here '''
 
 @njit
-def padd_image(img: np.ndarray, row_pad: int = 1, col_pad: int = 1):
+def padd_image(img: np.ndarray, row_pad: int = 1, col_pad: int = 1)->np.ndarray:
+    '''
+    docstring for padd_image: 
+    
+    :param img : input image to be padded as a numpy array 
+    :type img : np.ndarray 
+    :param row_pad: the number of rows to padd (default is 1)
+    :type row_pad: int 
+    :param col_pad: the number of columns to padd (default is 1)
+    :type col_pad: int 
+    :return: padded image as np.ndarray 
+    :rtype: ndarray[_AnyShape, dtype[Any]]
+    '''
     h, w = img.shape
     ph, pw = h + 2*row_pad, w + 2*col_pad
     padded = np.zeros((ph, pw), dtype=img.dtype)
@@ -17,7 +29,21 @@ def padd_image(img: np.ndarray, row_pad: int = 1, col_pad: int = 1):
 
 @njit
 def conv2D(img: np.ndarray, mask : np.ndarray, hstep: int = 1, vstep: int = 1)->np.ndarray: 
- 
+    '''
+    docstring for conv2D: 
+    
+    :param img : input image to be convolved by a mask as a numpy array 
+    :type img : np.ndarray 
+    :param mask: the kernel which would be convolved onto the image 
+    :type mask: np.ndarray 
+    :param hstep: horisontal stride 
+    :type hstep: int 
+    :param vstep: vertical stride 
+    :type vstep: int  
+    :return: returns convolved image as np.ndarray 
+    :rtype: ndarray[_AnyShape, dtype[Any]]
+    '''
+    
     if not (mask.shape[0] % 2 == 1 and mask.shape[1]%2 == 1): 
         raise ValueError("mask should have sape of the form : (odd_val, odd_val)")
     
@@ -54,6 +80,14 @@ def conv2D(img: np.ndarray, mask : np.ndarray, hstep: int = 1, vstep: int = 1)->
     
 @njit
 def laplacian(img : np.ndarray)->np.ndarray:
+    '''
+    docstring for laplacian 
+    
+    :param img: input image, which we are going to convolve with laplacian kernel 
+    :type img: np.ndarray 
+    :return: returns the convolved image as np.ndarray 
+    :rtype: ndarray[_AnyShape, dtype[Any]]
+    '''
     kernel_1 = np.array(
             [
                 [0, 1, 0],
@@ -86,6 +120,16 @@ def laplacian(img : np.ndarray)->np.ndarray:
 
 
 def sharpen_image(img: np.ndarray, c : float = 1.0)->np.ndarray: 
+    '''
+    docstring for sharpen_image 
+    
+    :param img : input image 
+    :type img : np.ndarray 
+    :param c : the control parameter for sharpening 
+    :type c : float (default is 1.0)
+    :return: returns the sharpened image as np.ndarray 
+    :rtype: ndarray[_AnyShape, dtype[Any]]
+    '''
     img_F = img.astype(np.float32)
     lap = laplacian(img)
     
@@ -98,8 +142,18 @@ def sharpen_image(img: np.ndarray, c : float = 1.0)->np.ndarray:
 
 
 @njit
-def gaussian_filter(sigma: float = 1.0, size: int = 3): 
+def gaussian_filter(sigma: float = 1.0, size: int = 3)->np.ndarray: 
     '''
+    docstring for gaussian_filter
+    
+    :param sigma : the parameter for gaussian kernel   
+    :type sigma : float 
+    :param size: the size of the kernel 
+    :type size : int (default is 3, only odd values are permissible)
+    :return: returns the size * size kernel 
+    :rtype: ndarray[_AnyShape, dtype[Any]]
+    
+    For additional details kindly access 
         https://stackoverflow.com/a/43346070
     '''
     
@@ -113,6 +167,19 @@ def gaussian_filter(sigma: float = 1.0, size: int = 3):
 
 
 def gaussian_smoothing(img : np.ndarray, kernel_size: int = 3, sigma : float = 1.0)->np.ndarray:
+    '''
+    docstring for gaussian_smoothing
+    
+    :param img : the input image as numpy array 
+    :type img : np.ndarray 
+    :param kernel_size: the size of the kernel 
+    :type kernel_size : int (default is 3, only odd values are permissible)
+    :param sigma : the parameter of the kernel 
+    :type sigma : float (default is 1.0)
+    :return: returns the smoothed image
+    :rtype: ndarray[_AnyShape, dtype[Any]]
+    
+    '''
     gauss = gaussian_filter(sigma, kernel_size)
     
     smoothed = conv2D(img, gauss)

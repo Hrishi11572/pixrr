@@ -92,7 +92,12 @@ def kmeansOnHistogram(img: np.ndarray, k : int = 2)->np.ndarray:
 
     return labels
 
-def kmeans_segmentation(img:np.ndarray, k: int = 2, iterations: int = 5, save : bool = False , directory : str | None = None, filename : str | None = "default.png")->np.ndarray:
+def kmeans_segmentation(img:np.ndarray, 
+                        k: int = 2,
+                        iterations: int = 5,
+                        save : bool = False ,
+                        directory : str | None = None,
+                        filename : str | None = "default.png")->np.ndarray:
     '''
     Docstring for kmeans_segmentation
     

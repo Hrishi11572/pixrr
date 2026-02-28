@@ -2,8 +2,30 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from .io import convert_to_gray
 from .filters import conv2D
+import os 
 
-def gradient_prewitt(img: np.ndarray,kernel_size : int = 3, direction: str = "both", hstep: int = 1, vstep :int = 1) -> np.ndarray : 
+def gradient_prewitt(img: np.ndarray,
+                     kernel_size : int = 3,
+                     direction: str = "both",
+                     hstep: int = 1,
+                     vstep :int = 1) -> np.ndarray : 
+    '''
+    Docstring for gradient_prewitt 
+    
+    :param img : input the image as a numpy array 
+    :type img : np.ndarray 
+    :param kernel_size : the size of the kernel, should be always odd
+    :type kernel_size : int (default = 3)
+    :param direction : in which direction you want to use the kernel : "both", "h", "v"
+    :type direction : str (Default = "both") 
+    :param hstep : horizontal stride 
+    :type hstep : int (Default = 1)
+    :param vstep : vertical stride 
+    :type vstep : int (Default = 1)
+    :return: the convolved image, as numpy array 
+    :rtype: ndarray[_AnyShape, dtype[Any]]
+    '''
+    
     if img.ndim == 3: 
         img = convert_to_gray(img)
     
@@ -34,7 +56,27 @@ def gradient_prewitt(img: np.ndarray,kernel_size : int = 3, direction: str = "bo
     
 
 
-def gradient_sobel(img: np.ndarray,kernel_size : int = 3, direction: str = "both", hstep: int = 1, vstep :int = 1) -> np.ndarray : 
+def gradient_sobel(img: np.ndarray,
+                   kernel_size : int = 3,
+                   direction: str = "both",
+                   hstep: int = 1,
+                   vstep :int = 1) -> np.ndarray : 
+    '''
+    Docstring for gradient_sobel  
+    
+    :param img : input the image as a numpy array 
+    :type img : np.ndarray 
+    :param kernel_size : the size of the kernel, should be always odd
+    :type kernel_size : int (default = 3)
+    :param direction : the direction where you want to use the kernel : "both", "h" , "v"
+    :type direction : str (Default = "both")
+    :param hstep : horizontal stride 
+    :type hstep : int (Default = 1)
+    :param vstep : vertical stride 
+    :type vstep : int (Default = 1)
+    :return: the convolved image, as numpy array 
+    :rtype: ndarray[_AnyShape, dtype[Any]]
+    '''
     if img.ndim == 3: 
         img = convert_to_gray(img)
     
@@ -90,14 +132,21 @@ def gradient_sobel(img: np.ndarray,kernel_size : int = 3, direction: str = "both
         return grad.astype(np.uint8)
        
        
-def contour_extractor(img : np.ndarray = None, save : bool = False, filename : str | None = None)->np.ndarray:
+def contour_extractor(img : np.ndarray = None,
+                      save : bool = False,
+                      directory : str = None, 
+                      filename : str | None = "default.png")->np.ndarray:
     '''
     Docstring for contour_extractor : 
     
-        extract the contour of the thresholded image, where interior is white and background is black 
+    extract the contour of the thresholded image, where interior is white and background is black 
         
     :param img: image as np.ndarray 
     :type img: np.ndarray
+    :param save : boolean variable, asking whether you want to save the output image 
+    :type save : bool 
+    :param directory : the path where you want to save the image 
+    :type directory : str (Default = None)
     :return: contour image 
     :rtype: ndarray[_AnyShape, dtype[Any]]
     '''
@@ -140,15 +189,17 @@ def contour_extractor(img : np.ndarray = None, save : bool = False, filename : s
         contour_img[i, j] = 255
 
     if save:
-        if filename is  None:      
-            raise ValueError("You want to save the image but did not provide a filename with extension")
-        else:
-            # creating new gray scale figure for saving 
-             
-            fig2, ax2 = plt.subplots()
-            ax2.imshow(contour_img, cmap="gray")
-            ax2.axis("off")
-            fig2.savefig(filename, dpi=300, bbox_inches="tight", pad_inches=0)
-            plt.close(fig2)
+        # creating new gray scale figure for saving 
+        fig2, ax2 = plt.subplots()
+        ax2.imshow(contour_img, cmap="gray")
+        ax2.axis("off")
+        
+        if directory is None or not os.path.exists(directory) : 
+            directory = os.getcwd()
+        
+        file_path = os.path.join(directory, filename)
+        
+        fig2.savefig(file_path, dpi=600, bbox_inches="tight", pad_inches=0)
+        plt.close(fig2)
 
     return contour_img
