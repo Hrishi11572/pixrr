@@ -1,9 +1,14 @@
 import pixrr
 import numpy as np
 
-def test_gray_conversion():
-    img = pixrr.handle_image("test_images/Bikesgray.jpg")
-    thrs_img = pixrr.otsu_thresholding(img, inverse=False)
-    pixrr.show_image(thrs_img)
 
-test_gray_conversion()
+# obtain an image 
+
+test_image_path = "tests/test_images/Bikesgray.jpg"
+img = pixrr.handle_image(test_image_path)
+
+# get the coordinates to test crop and save image functions 
+
+coords = (0,0,500,500)
+
+cropped_img = crop_image(img, coords , "/tests/test_images", "bullshit.png", viewMode=True)

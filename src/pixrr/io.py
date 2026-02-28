@@ -1,7 +1,7 @@
 from PIL import Image 
 import numpy as np 
 import matplotlib.pyplot as plt 
-
+import os 
 
 def handle_image(filepath:str)->np.ndarray: 
     '''
@@ -113,7 +113,7 @@ def show_image(img : np.ndarray, channel : str = "all")->None:
         plt.close()
         
 
-def save_image(img: np.ndarray, filename:str = "default.png")->None:
+def save_image(img: np.ndarray, directory : str , filename:str = "default.png")->None:
     '''
     Docstring for saveImage
     
@@ -123,7 +123,16 @@ def save_image(img: np.ndarray, filename:str = "default.png")->None:
     - Saves the image 
     '''
     
-    Image.fromarray(img).save(filename)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    
+    if filename == None: 
+        filename =  'saved_image.png'
+        
+    file_path = os.path.join(directory, filename)
+    
+    Image.fromarray(img).save(file_path)
+    
     return None 
 
 

@@ -13,6 +13,7 @@ It focuses on simplicity, clean function names, and easy-to-understand code, mak
 * Basic I/O helpers (read, write, display)
 * Plot and analyze histograms
 * Image thresholding
+* Image Cropping and Rotation (planned)
 
 ### **Filtering & Enhancement**
 
@@ -27,21 +28,14 @@ It focuses on simplicity, clean function names, and easy-to-understand code, mak
 
 * Prewitt and Sobel (horizontal & vertical)
 * Second-order derivatives
-* Marr–Hildreth edge detector (planned)
 * Canny edge detector (planned)
 
 ### **Segmentation & Classification**
 
-* Otsu thresholding (planned)
+* Otsu thresholding 
 * K-means clustering for image segmentation
 * Mean-Shift clustering (planned)
 * EM/Bayesian pixel classification (planned)
-
-### **Frequency Domain**
-
-* FFT & DFFT utilities (planned)
-* Low-pass / high-pass filters (planned)
-* Wiener filtering and restoration (planned)
 
 ---
 
@@ -53,7 +47,6 @@ It focuses on simplicity, clean function names, and easy-to-understand code, mak
 | Part 2 | Convolution, enhancement techniques, gradient operators |
 | Part 3 | Automatic segmentation & clustering                     |
 | Part 4 | Advanced edge detection and EM classification           |
-| Part 5 | Frequency-domain processing & restoration filters       |
 
 ---
 

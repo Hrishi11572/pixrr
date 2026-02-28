@@ -1,4 +1,4 @@
-# peda_img/__init__.py
+# pixrr/__init__.py
 
 from .edges import gradient_prewitt, gradient_sobel, contour_extractor
 from .enhance import linear_contrast_enhancement, histogram_equalization
