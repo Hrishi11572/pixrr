@@ -4,18 +4,14 @@ import numpy as np
 
 # obtain an image 
 
-test_image_path = "/Users/hrishikeshtiwari/Desktop/project_root/tests/test_images/image.png"
+test_image_path = "/Users/hrishikeshtiwari/Desktop/project_root/tests/test_images/Bikesgray.jpg"
 img = pixrr.handle_image(test_image_path)
 
 
-# Do some contrast enhancement 
+# do some thresholding and contour extraction 
 
-img2 = pixrr.gradient_prewitt(img, kernel_size=5, direction="v")
-pixrr.show_image(img=img2)
-
-# see the histogram 
-# pixrr.plot_img_hist(img, channel="green", save=True, directory="/Users/hrishikeshtiwari/Desktop/project_root/tests/test_images/", filename="georgebush.png")
-
+img2 = pixrr.threshold_image(img,50,inverse=True)
+pixrr.contour_extractor(img2,save=True)
 
 
 # # get the coordinates to test crop and save image functions 
