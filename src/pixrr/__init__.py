@@ -6,6 +6,7 @@ from .filters import padd_image, conv2D, laplacian, sharpen_image, gaussian_filt
 from .io import handle_image, convert_to_gray, show_image, save_image, plot_img_hist
 from .threshold import threshold_image, otsu_thresholding
 from .segmentation import kmeans_segmentation
+from .utils import crop_image
 
 # 2. DEFINING EXPORTS
 # This list controls what happens if someone types "from peda_img import *"
@@ -30,7 +31,8 @@ __all__ = [
     'plot_img_hist',
     'threshold_image',
     'kmeans_segmentation',
-    'otsu_thresholding'
+    'otsu_thresholding',
+    'crop_image'
 ]
 
 # Optional: Library Metadata
