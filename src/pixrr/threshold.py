@@ -1,6 +1,6 @@
 import numpy as np 
 from .io import convert_to_gray
-import random
+
 
 
 def threshold_image(img: np.ndarray | None = None, thresholdValue : int = 0, inverse : bool = False)->np.ndarray:
@@ -9,7 +9,7 @@ def threshold_image(img: np.ndarray | None = None, thresholdValue : int = 0, inv
     
     :param img: The image as np.ndarray
     :type img: np.ndarray | None
-    :param thresholdValue: the pixel value at which you want to threshold the image 
+    :param thresholdValue: the pixel intensity value at which you want to threshold the image 
     :type thresholdValue: int
     :param inverse: if you want the blacks to become the whites in a thresholded image
     :type inverse: bool
@@ -39,7 +39,19 @@ def threshold_image(img: np.ndarray | None = None, thresholdValue : int = 0, inv
     return result.astype(np.uint8)
 
 
-def otsu_thresholding(img: np.ndarray, inverse : bool = False): 
+def otsu_thresholding(img: np.ndarray, inverse : bool = False)->np.ndarray: 
+    '''
+    Docstring for otsu_thresholding
+    
+    :param img: The image as np.ndarray
+    :type img: np.ndarray 
+
+    :param inverse: if you want the blacks to become the whites in a thresholded image
+    :type inverse: bool
+    
+    :return: a thresholded image as np.ndarray 
+    :rtype: ndarray[_AnyShape, dtype[Any]]
+    '''
     def otsu_intraclass_variance(img: np.ndarray , threshold: int):
         ''' https://en.wikipedia.org/wiki/Otsu%27s_method ''' 
         return np.nansum(

@@ -2,6 +2,7 @@ import statistics
 import numpy as np 
 import matplotlib.pyplot as plt 
 from .io import convert_to_gray
+import os 
 
     
 def kmeansOnHistogram(img: np.ndarray, k : int = 2)->np.ndarray: 
@@ -91,7 +92,7 @@ def kmeansOnHistogram(img: np.ndarray, k : int = 2)->np.ndarray:
 
     return labels
 
-def kmeans_segmentation(img:np.ndarray, k: int = 2, iterations: int = 5, save : bool = False , filename : str | None = None)->np.ndarray:
+def kmeans_segmentation(img:np.ndarray, k: int = 2, iterations: int = 5, save : bool = False , directory : str | None = None, filename : str | None = "default.png")->np.ndarray:
     '''
     Docstring for kmeans_segmentation
     
@@ -103,6 +104,8 @@ def kmeans_segmentation(img:np.ndarray, k: int = 2, iterations: int = 5, save : 
     :type iterations: int
     :param save: if you want to save the image
     :type save: bool
+    :param directory: the directory where you wish to save the result of segmentation 
+    :type directory : str or None 
     :param filename: the name of the file, where you want to save the image
     :type filename: str | None
     :return: a numpy array 
@@ -134,28 +137,30 @@ def kmeans_segmentation(img:np.ndarray, k: int = 2, iterations: int = 5, save : 
     
 
     if save: 
-        if filename is None: 
-            raise ValueError("You want to save the image but did not provide a filename with extension")
-        else:
-            # 1. Create a new figure and axes for saving
-            fig2, ax2 = plt.subplots()
-            
-            # 2. Draw the new image onto the *saving* axes
-            ax2.imshow(new_img)
-            
-            # 3. Configure the axes
-            ax2.axis("off")
-            
-            HIGH_RES_DPI = 600
-            
-            # **The key line for high resolution is here:**
-            fig2.savefig(
-                filename, 
-                dpi=HIGH_RES_DPI,              # Sets the resolution
-                bbox_inches="tight",           # Crops unnecessary white space
-                pad_inches=0                   # Removes padding
-            )
-            
-            plt.close(fig2)
+        # 1. Create a new figure and axes for saving
+        fig2, ax2 = plt.subplots()
+        
+        # 2. Draw the new image onto the *saving* axes
+        ax2.imshow(new_img)
+        
+        # 3. Configure the axes
+        ax2.axis("off")
+        
+        HIGH_RES_DPI = 600
+
+        if directory is None or not os.path.exists(directory) : 
+            directory = os.getcwd()
+        
+        file_path = os.path.join(directory, filename)
+        
+        # **The key line for high resolution is here:**
+        fig2.savefig(
+            file_path, 
+            dpi=HIGH_RES_DPI,              # Sets the resolution
+            bbox_inches="tight",           # Crops unnecessary white space
+            pad_inches=0                   # Removes padding
+        )
+        
+        plt.close(fig2)
     
     return new_img
