@@ -4,12 +4,14 @@ import matplotlib.pyplot as plt
 import os 
 
 def handle_image(filepath:str)->np.ndarray: 
-    '''
-    Job : load the image into a consistent, usable data-structure for processing
-        
-    - opens image using pillow 
-    - convert image to array. 
-    '''
+    """
+    docstring for handle_image 
+    
+    :param filepath : the filepath of the image to be opened (or handled) 
+    :type filepath : str
+    :return: returns the read image as np.ndarray 
+    :rtype: ndarray[_AnyShape, dtype[Any]]
+    """
     
     # input the image as a pillow object 
     try: 
@@ -44,7 +46,7 @@ def handle_image(filepath:str)->np.ndarray:
 
 def convert_to_gray(img : np.ndarray | None = None)->np.ndarray:
     '''
-    Docstring for convertToGray
+    Docstring for convert_to_gray
     
     :param img: Input the image as np.ndarray 
     :type img: np.ndarray | None
@@ -76,11 +78,14 @@ def convert_to_gray(img : np.ndarray | None = None)->np.ndarray:
 
 def show_image(img : np.ndarray, channel : str = "all")->None: 
     '''
-    Docstring for showImage
+    Docstring for show_image
     
-    :param img: a numpy array 
+    :param img: image as a numpy array 
     :type img: np.ndarray
+    :return: returns None
+    :rtype: None
     
+    additional description : 
     - Takes an image as input as an np.ndarray 
     - Displays the image on the console. 
     '''
@@ -119,7 +124,13 @@ def save_image(img: np.ndarray, directory : str | None = None , filename:str = "
     
     :param img: a numpy array
     :type img: np.ndarray
-
+    :param directory : the directory where image is to be saved 
+    :type directory : str or None 
+    :param filename : the name with which image would be saved at the directory  
+    :type filename : str
+    :return: returns None
+    :rtype: None
+    
     - Saves the image 
     '''
     
@@ -137,11 +148,16 @@ def save_image(img: np.ndarray, directory : str | None = None , filename:str = "
 
 
 
-def plot_img_hist(img : np.ndarray, channel : str ="gray", curve_type="boxy" ,save: bool = False, filename : str | None = None)->None: 
+def plot_img_hist(img : np.ndarray,
+                  channel : str ="gray",
+                  curve_type="boxy",
+                  save: bool = False,
+                  directory : str | None = None,
+                  filename : str | None = None)->None: 
     '''
     Docstring for plot_img_hist
     
-    :param img: A numpy array of shape (H,W,C)
+    :param img: A numpy array of shape (H,W,C) for RGB or (H,W) for grayscale
     :type img: np.ndarray
     :param channel: the channels "gray", "red", "green", "blue", "all" (to see all three in one image)
     :type channel: str
@@ -151,7 +167,12 @@ def plot_img_hist(img : np.ndarray, channel : str ="gray", curve_type="boxy" ,sa
     :type curve_type : str
     '''
 
-    def plot_boxy_histogram(img : np.ndarray, t : tuple = (), save: bool = False, filename : str | None = None) -> None:
+    def plot_boxy_histogram(img : np.ndarray, t : tuple = (), save: bool = False, directory : str | None = None, filename : str | None = "default.png") -> None:
+        """
+        
+        plot_boxy_histogram is a helper function
+        
+        """
         colors = ("red", "green", "blue", "gray")
         
         fig, ax = plt.subplots()
@@ -174,12 +195,21 @@ def plot_img_hist(img : np.ndarray, channel : str ="gray", curve_type="boxy" ,sa
         plt.show()
         
         ''' Save the image if asked to '''
-        if save and filename is not None: 
-            fig.savefig(filename, dpi=300)
-            
-        return None 
+        if save is not None: 
+            if directory is None or not os.path.exists(directory) : 
+                directory = os.getcwd()
+                
+            file_path = os.path.join(directory, filename)
+            fig.savefig(file_path,dpi=300)
+        
+        return None    
     
-    def plot_smooth_histogram(img : np.ndarray, t : tuple = (), save : bool = False, filename : str | None = None) -> None:
+    def plot_smooth_histogram(img : np.ndarray, t : tuple = (), save : bool = False, directory : str | None = None, filename : str | None = None) -> None:
+        """
+        
+        plot_smooth_histogram is a helper function 
+        
+        """
         colors = ("red", "green", "blue")
         fig, ax = plt.subplots()
         ax.set_xlim([0, 255])
@@ -205,8 +235,12 @@ def plot_img_hist(img : np.ndarray, channel : str ="gray", curve_type="boxy" ,sa
         plt.show()
         
         ''' Save the image if asked to '''
-        if save and filename is not None: 
-            fig.savefig(filename,dpi=300)
+        if save is not None: 
+            if directory is None or not os.path.exists(directory) : 
+                directory = os.getcwd()
+                
+            file_path = os.path.join(directory, filename)
+            fig.savefig(file_path,dpi=300)
             
         return None 
     
@@ -215,7 +249,7 @@ def plot_img_hist(img : np.ndarray, channel : str ="gray", curve_type="boxy" ,sa
         if channel != "gray": 
             raise ValueError("Cannot request RGB histogram from a grayscale image.")
         else: 
-            plot_boxy_histogram(img=img,t=(),save=save,filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img=img,t=(),save=save,filename=filename)
+            plot_boxy_histogram(img=img,t=(),save=save,directory=directory,filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img=img,t=(),save=save,directory=directory,filename=filename)
     elif img.ndim == 3: 
         ''' it is an RGB image, and the user might want to see any type of histogram'''
         if channel == "gray": 
@@ -223,21 +257,14 @@ def plot_img_hist(img : np.ndarray, channel : str ="gray", curve_type="boxy" ,sa
             green = img[:,:,1]
             blue = img[:,:,2]
             gray = (0.299 * red + 0.587 * green + 0.114 * blue).astype(np.uint8)
-            plot_boxy_histogram(img=gray,t=(),save=save,filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img=gray,t=(),save=save,filename=filename)
-        elif channel == "r": 
-            plot_boxy_histogram(img, t=(0,), save=save, filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img, t=(0,), save=save, filename=filename)
-        elif channel == "g":
-            plot_boxy_histogram(img, t=(1,), save=save, filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img, t=(1,), save=save, filename=filename)
-        elif channel == "b": 
-            plot_boxy_histogram(img, t=(2,), save=save, filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img, t=(2,), save=save, filename=filename)
+            plot_boxy_histogram(img=gray,t=(),save=save,directory=directory,filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img=gray,t=(),save=save,directory=directory,filename=filename)
+        elif channel == "red": 
+            plot_boxy_histogram(img, t=(0,), save=save,directory=directory,filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img, t=(0,), save=save, directory=directory, filename=filename)
+        elif channel == "green":
+            plot_boxy_histogram(img, t=(1,), save=save,directory=directory,filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img, t=(1,), save=save, directory=directory, filename=filename)
+        elif channel == "blue": 
+            plot_boxy_histogram(img, t=(2,), save=save, directory=directory ,filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img, t=(2,), save=save, directory=directory,filename=filename)
         elif channel == "all":
-            plot_boxy_histogram(img, t=(0,1,2), save=save, filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img, t=(0,1,2), save=save, filename=filename)
+            plot_boxy_histogram(img, t=(0,1,2), save=save, directory=directory, filename=filename) if curve_type == "boxy" else plot_smooth_histogram(img, t=(0,1,2), save=save, directory=directory,filename=filename)
   
     return None
-
-
-if __name__ == "__main__":
-    # Example 
-    img = handle_image("testfile.png")
-    gray_img = convert_to_gray(img)
-    save_image(gray_img, "oppenheimer.png")
