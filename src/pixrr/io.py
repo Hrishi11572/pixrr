@@ -82,6 +82,8 @@ def show_image(img : np.ndarray, channel : str = "all")->None:
     
     :param img: image as a numpy array 
     :type img: np.ndarray
+    :param channel : the color channels (red , green , blue , all)
+    :type channel : str
     :return: returns None
     :rtype: None
     
@@ -94,6 +96,8 @@ def show_image(img : np.ndarray, channel : str = "all")->None:
             plt.axis("off")
             plt.imshow(img)
             plt.show()
+            plt.close()
+            return 
         else :
             def display_colored(img: np.ndarray, level:int)->None: 
                 if level >= 3: 
@@ -104,19 +108,21 @@ def show_image(img : np.ndarray, channel : str = "all")->None:
                     plt.axis("off")
                     plt.imshow(newimg)
                     plt.show()
+                    plt.close()
+                    return 
             
-            if channel == "r": 
+            if channel == "red": 
                 display_colored(img, 0)
-            if channel == "g": 
+            elif channel == "green": 
                 display_colored(img, 1)
-            if channel == "b": 
+            elif channel == "blue": 
                 display_colored(img, 2)
     else: 
         plt.axis("off")
         plt.imshow(img, cmap="gray", vmin=0, vmax=255)
         plt.show()
         plt.close()
-        
+        return 
 
 def save_image(img: np.ndarray, directory : str | None = None , filename:str = "default.png")->None:
     '''
@@ -195,7 +201,7 @@ def plot_img_hist(img : np.ndarray,
         plt.show()
         
         ''' Save the image if asked to '''
-        if save is not None: 
+        if save is not False: 
             if directory is None or not os.path.exists(directory) : 
                 directory = os.getcwd()
                 
@@ -235,7 +241,7 @@ def plot_img_hist(img : np.ndarray,
         plt.show()
         
         ''' Save the image if asked to '''
-        if save is not None: 
+        if save is not False: 
             if directory is None or not os.path.exists(directory) : 
                 directory = os.getcwd()
                 
