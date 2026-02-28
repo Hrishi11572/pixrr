@@ -129,6 +129,9 @@ def sharpen_image(img: np.ndarray, c : float = 1.0)->np.ndarray:
     :type c : float (default is 1.0)
     :return: returns the sharpened image as np.ndarray 
     :rtype: ndarray[_AnyShape, dtype[Any]]
+    
+    Additional description 
+    sharpened_Image = I - c·∇²I
     '''
     img_F = img.astype(np.float32)
     lap = laplacian(img)
