@@ -113,7 +113,7 @@ def show_image(img : np.ndarray, channel : str = "all")->None:
         plt.close()
         
 
-def save_image(img: np.ndarray, directory : str , filename:str = "default.png")->None:
+def save_image(img: np.ndarray, directory : str | None = None , filename:str = "default.png")->None:
     '''
     Docstring for saveImage
     
@@ -123,8 +123,8 @@ def save_image(img: np.ndarray, directory : str , filename:str = "default.png")-
     - Saves the image 
     '''
     
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    if directory is None or not os.path.exists(directory) : 
+        directory = os.getcwd()
     
     if filename == None: 
         filename =  'saved_image.png'

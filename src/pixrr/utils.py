@@ -6,7 +6,7 @@ import os
 from PIL import Image
 from .io import show_image, save_image
 
-def crop_image(img : np.ndarray, coords : tuple , directory : str, filename: str , viewMode : True)->np.ndarray: 
+def crop_image(img : np.ndarray, coords : tuple , viewMode : bool = True)->np.ndarray: 
     """
     coords : (startx , starty , endx , endy)
     """
@@ -18,12 +18,9 @@ def crop_image(img : np.ndarray, coords : tuple , directory : str, filename: str
     if cropped_img.size == 0: 
         print("Error: Cropping coordinates resulted in an empty image.")
         return
-
-    # save the image 
-    save_image(cropped_img, directory=directory, filename=filename)
     
     # display the image 
     if viewMode: 
         show_image(cropped_img)    
-    
+                
     return cropped_img
