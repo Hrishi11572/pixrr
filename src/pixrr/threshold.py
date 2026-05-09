@@ -1,6 +1,7 @@
 import numpy as np 
 from .io import convert_to_gray
 from .utils import img_extremes
+from .filters import gaussian_filter, conv2D
 import math
 
 
@@ -75,6 +76,17 @@ def otsu_thresholding(img: np.ndarray, inverse : bool = False)->np.ndarray:
 
 
 def iterative_global_thresholding(img: np.ndarray, inverse: bool = False)->np.ndarray: 
+    """
+    Docstring for iterative_global_thresholding
+    
+    :param img: the input image 
+    :type img: np.ndarray 
+    
+    :param inverse: True if inversion is required
+    :type inverse : bool 
+    
+    An iterative algorithm to find, optimal threshold value and perform thresholding of gray scale image.
+    """
     if img is None: 
         raise ValueError("Please enter an image")
     
@@ -112,3 +124,31 @@ def iterative_global_thresholding(img: np.ndarray, inverse: bool = False)->np.nd
     result = threshold_image(img, thresholdValue=T, inverse=inverse)
 
     return result
+
+
+def adaptive_thresh_gaussian(img: np.ndarray, kernel_size :int = 3, a:float = 1.0)->np.ndarray: 
+    
+    """
+    Docstring for adaptive_thresholding 
+    """
+
+    if img is None: 
+        raise ValueError("Invalid Image passed in input")
+    
+    if img.ndim == 3: 
+        img = convert_to_gray(img)
+    
+    if kernel_size%2 == 0: 
+        raise ValueError("Invalid kernel size, only (odd,odd) shape is preferred.")
+    
+    kernel = gaussian_filter(kernel_size)
+    kernel = kernel / np.sum(kernel)
+    blurred = conv2D(
+            img,
+            mask=kernel,
+        )
+
+    threshold = blurred - a
+    result = np.where(img > threshold, 255, 0)
+    
+    return result.astype(np.uint8)

@@ -4,10 +4,9 @@ import numpy as np
 
 # obtain an image 
 
-test_image_path = "/Users/hrishikeshtiwari/Desktop/project_root/tests/test_images/satellite.png"
+test_image_path = "/Users/hrishikeshtiwari/Desktop/project_root/tests/test_images/sudoku2.png"
 img = pix.handle_image(test_image_path)
 
-# obtain imge summary 
+thrs_img = pix.adaptive_thresh_gaussian(img)
+smoothed_img = pix.gaussian_smoothing(thrs_img)
 
-pix.show_image(pix.iterative_global_thresholding(pix.gaussian_smoothing(img)))
-pix.show_image(pix.threshold_image(img, 100))
