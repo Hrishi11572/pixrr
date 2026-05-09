@@ -9,5 +9,5 @@ img = pix.handle_image(test_image_path)
 
 # obtain imge summary 
 
-pix.show_image(pix.iterative_global_thresholding(img))
+pix.show_image(pix.iterative_global_thresholding(pix.gaussian_smoothing(img)))
 pix.show_image(pix.threshold_image(img, 100))

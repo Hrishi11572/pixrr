@@ -1,6 +1,6 @@
 import numpy as np 
 from numba import njit 
-
+from .io import convert_to_gray
 
 ''' Defining Convolution Here '''
 
@@ -185,6 +185,10 @@ def gaussian_smoothing(img : np.ndarray, kernel_size: int = 3, sigma : float = 1
     '''
     gauss = gaussian_filter(sigma, kernel_size)
     
+    if img.ndim == 3: 
+        print("gaussian_smoothing / Auto convert to gray scale ... ")
+        img = convert_to_gray(img)
+        
     smoothed = conv2D(img, gauss)
     smoothed = np.clip(smoothed, 0, 255)
     
