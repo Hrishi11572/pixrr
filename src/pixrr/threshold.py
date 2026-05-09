@@ -1,6 +1,7 @@
 import numpy as np 
 from .io import convert_to_gray
-from .utils import imgExtremes
+from .utils import img_extremes
+import math
 
 
 def threshold_image(img: np.ndarray | None = None, thresholdValue : int = 0, inverse : bool = False)->np.ndarray:
@@ -18,6 +19,9 @@ def threshold_image(img: np.ndarray | None = None, thresholdValue : int = 0, inv
     '''
     if img is None: 
         raise ValueError("Please enter an image and a threshold value")
+    
+    if not (type(thresholdValue)==int) :
+        raise ValueError("threshold value must be an integer")
     
     if not (0 <= thresholdValue <= 255):
         raise ValueError("thresholdValue must be between 0 and 255.")
@@ -70,11 +74,41 @@ def otsu_thresholding(img: np.ndarray, inverse : bool = False)->np.ndarray:
     return threshold_image(img=img, thresholdValue=otsu_threshold, inverse=inverse)
 
 
-def iterativeGlobalThresholding(img: np.ndarray)->np.ndarray: 
+def iterative_global_thresholding(img: np.ndarray, inverse: bool = False)->np.ndarray: 
     if img is None: 
         raise ValueError("Please enter an image")
     
-    max_intensity, min_intensity = imgExtremes(img)
+    if img.ndim == 3: 
+        print("Converted image to gray scale first ... ")
+        img = convert_to_gray(img=img)
     
+    max_intensity, min_intensity = img_extremes(img)
     
-    pass
+    initial_guess = math.floor(0.5*(max_intensity + min_intensity))
+    T = 0
+    hist, bin_edges_ = np.histogram(img, bins=256, range=(0,255))
+    
+    while abs(T - initial_guess) >= 2: 
+        m1 = 0
+        m2 = 0
+        
+        group1_size = 0 
+        group2_size = 0 
+        
+        for i in range(1, len(bin_edges_)):
+            if i <= initial_guess:
+                m1 += bin_edges_[i]*hist[i-1]
+                group1_size += hist[i-1]
+            else:
+                m2 += bin_edges_[i]*hist[i-1]
+                group2_size += hist[i-1]
+        
+        T = initial_guess
+        initial_guess = math.floor((m1 + m2)/(group1_size + group2_size))
+    
+    T = initial_guess
+    
+    # Now Run Thresholding 
+    result = threshold_image(img, thresholdValue=T, inverse=inverse)
+
+    return result

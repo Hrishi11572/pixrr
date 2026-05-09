@@ -4,9 +4,10 @@ import numpy as np
 
 # obtain an image 
 
-test_image_path = "/Users/hrishikeshtiwari/Desktop/project_root/tests/test_images/testfile2.jpg"
+test_image_path = "/Users/hrishikeshtiwari/Desktop/project_root/tests/test_images/satellite.png"
 img = pix.handle_image(test_image_path)
 
 # obtain imge summary 
 
-pix.imageSummary(img)
+pix.show_image(pix.iterative_global_thresholding(img))
+pix.show_image(pix.threshold_image(img, 100))

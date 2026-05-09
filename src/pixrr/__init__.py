@@ -4,9 +4,9 @@ from .edges import gradient_prewitt, gradient_sobel, contour_extractor
 from .enhance import linear_contrast_enhancement, histogram_equalization
 from .filters import padd_image, conv2D, laplacian, sharpen_image, gaussian_filter, gaussian_smoothing
 from .io import handle_image, convert_to_gray, show_image, save_image, plot_img_hist
-from .threshold import threshold_image, otsu_thresholding
+from .threshold import threshold_image, otsu_thresholding, iterative_global_thresholding
 from .segmentation import kmeans_segmentation
-from .utils import crop_image, imgExtremes, imageSummary
+from .utils import crop_image, img_extremes, image_summary
 
 # 2. DEFINING EXPORTS
 # This list controls what happens if someone types "from peda_img import *"
@@ -32,9 +32,10 @@ __all__ = [
     'threshold_image',
     'kmeans_segmentation',
     'otsu_thresholding',
+    'iterative_global_thresholding',
     'crop_image',
-    'imgExtremes', 
-    'imageSummary'
+    'img_extremes', 
+    'image_summary'
 ]
 
 # Optional: Library Metadata

@@ -35,7 +35,7 @@ def crop_image(img : np.ndarray, coords : tuple , viewMode : bool = True)->np.nd
     return cropped_img
 
 
-def imgExtremes(img : np.ndarray)->tuple: 
+def img_extremes(img : np.ndarray)->tuple: 
     ''' 
     Docstring for imgExtremes: 
     
@@ -49,7 +49,7 @@ def imgExtremes(img : np.ndarray)->tuple:
     
     return (np.max(img), np.min(img))
 
-def imageSummary(img:np.ndarray)->None: 
+def image_summary(img:np.ndarray)->None: 
     '''
         Docstring for imageSummary
         
@@ -65,7 +65,7 @@ def imageSummary(img:np.ndarray)->None:
     
     print("- Colored image") if img.ndim == 3 else print("- Gray Scale Image")
 
-    max_i, min_i = imgExtremes(img)
+    max_i, min_i = img_extremes(img)
     print(f"- Max Pixel intensity : {max_i}, Min Pixel intensity : {min_i}")        
     print(f"- Image shape : {img.shape}")
     return None
