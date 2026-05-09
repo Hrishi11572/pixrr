@@ -47,7 +47,7 @@ def imgExtremes(img : np.ndarray)->tuple:
     if img is None: 
         raise ValueError("Please enter a valid image")
     
-    return (np.argmax(img), np.argmin(img))
+    return (np.max(img), np.min(img))
 
 def imageSummary(img:np.ndarray)->None: 
     '''
@@ -59,13 +59,13 @@ def imageSummary(img:np.ndarray)->None:
         Provides the summary of the image, details about the dimension, the channels, max_intensity, min_intensity
     '''
     
-    print("################ SUMMARY #################\n")
+    print("\n##########################################")
+    print("################ SUMMARY #################")
+    print("##########################################\n")
     
-    print("- Colored image \n") if img.ndim == 3 else print("- Gray Scale Image \n")
+    print("- Colored image") if img.ndim == 3 else print("- Gray Scale Image")
 
     max_i, min_i = imgExtremes(img)
     print(f"- Max Pixel intensity : {max_i}, Min Pixel intensity : {min_i}")        
-    
     print(f"- Image shape : {img.shape}")
-
     return None
