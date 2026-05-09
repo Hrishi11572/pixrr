@@ -33,3 +33,39 @@ def crop_image(img : np.ndarray, coords : tuple , viewMode : bool = True)->np.nd
         show_image(cropped_img)    
                 
     return cropped_img
+
+
+def imgExtremes(img : np.ndarray)->tuple: 
+    ''' 
+    Docstring for imgExtremes: 
+    
+    :param img: the input image 
+    :type img: np.ndarray 
+    
+    Returns a tuple, containing the maximum and the minimum pixel intensity  
+    '''
+    if img is None: 
+        raise ValueError("Please enter a valid image")
+    
+    return (np.argmax(img), np.argmin(img))
+
+def imageSummary(img:np.ndarray)->None: 
+    '''
+        Docstring for imageSummary
+        
+        :param img: the input image 
+        :type img : np.ndarray 
+        
+        Provides the summary of the image, details about the dimension, the channels, max_intensity, min_intensity
+    '''
+    
+    print("################ SUMMARY #################\n")
+    
+    print("- Colored image \n") if img.ndim == 3 else print("- Gray Scale Image \n")
+
+    max_i, min_i = imgExtremes(img)
+    print(f"- Max Pixel intensity : {max_i}, Min Pixel intensity : {min_i}")        
+    
+    print(f"- Image shape : {img.shape}")
+
+    return None

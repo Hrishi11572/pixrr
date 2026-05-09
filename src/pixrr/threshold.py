@@ -1,6 +1,6 @@
 import numpy as np 
 from .io import convert_to_gray
-
+from .utils import imgExtremes
 
 
 def threshold_image(img: np.ndarray | None = None, thresholdValue : int = 0, inverse : bool = False)->np.ndarray:
@@ -68,3 +68,13 @@ def otsu_thresholding(img: np.ndarray, inverse : bool = False)->np.ndarray:
     )
     
     return threshold_image(img=img, thresholdValue=otsu_threshold, inverse=inverse)
+
+
+def iterativeGlobalThresholding(img: np.ndarray)->np.ndarray: 
+    if img is None: 
+        raise ValueError("Please enter an image")
+    
+    max_intensity, min_intensity = imgExtremes(img)
+    
+    
+    pass
