@@ -130,6 +130,20 @@ def adaptive_thresh_gaussian(img: np.ndarray, kernel_size :int = 3, a:float = 1.
     
     """
     Docstring for adaptive_thresholding 
+    
+    :param img: the input image 
+    :type img: np.ndarray 
+    
+    :param kernel_size : the size of the kernel 
+    :type kernel_size : int 
+    
+    :param a : the adaptive thresholding parameter 
+    :type a : float 
+    
+    :param inverse : True if one wants inverted thresholding 
+    :type inverse : bool 
+    
+    The function takes input an image as a numpy array and outputs the thresholded image, by performing adaptive gaussian thresholding.
     """
 
     if img is None: 
