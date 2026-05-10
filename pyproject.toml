@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pixrr"
-version = "0.1.0"
+version = "1.0.0"
 description = "A lightweight image processing toolkit for Python"
 readme = "README.md"
 license = { file = "LICENSE" }

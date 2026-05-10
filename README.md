@@ -1,4 +1,4 @@
-# **pixrr : A lightweight image processing toolkit for python**
+# **Pixrr : A lightweight image processing toolkit for python**
 
 `pixrr` is a lightweight, beginner-friendly image processing library built for fast experimentation and teaching.
 It focuses on simplicity, clean function names, and easy-to-understand code, making it useful both for quick image tasks and for pedagogical environments such as introductory image processing courses.
