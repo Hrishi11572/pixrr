@@ -126,7 +126,7 @@ def iterative_global_thresholding(img: np.ndarray, inverse: bool = False)->np.nd
     return result
 
 
-def adaptive_thresh_gaussian(img: np.ndarray, kernel_size :int = 3, a:float = 1.0)->np.ndarray: 
+def adaptive_thresh_gaussian(img: np.ndarray, kernel_size :int = 3, a:float = 1.0, inverse : bool = False)->np.ndarray: 
     
     """
     Docstring for adaptive_thresholding 
@@ -149,6 +149,10 @@ def adaptive_thresh_gaussian(img: np.ndarray, kernel_size :int = 3, a:float = 1.
         )
 
     threshold = blurred - a
-    result = np.where(img > threshold, 255, 0)
+    
+    if not inverse:
+        result = np.where(img < threshold, 0, 255)
+    else: 
+        result = np.where(img < threshold, 255, 0)
     
     return result.astype(np.uint8)
